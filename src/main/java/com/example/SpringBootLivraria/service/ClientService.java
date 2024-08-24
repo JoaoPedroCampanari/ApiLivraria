@@ -10,9 +10,11 @@ public interface ClientService {
 
     ClientModel findById(UUID id);
 
-    List<ClientModel> findALl(UUID id);
+    List<ClientModel> findALl();
 
     ClientModel save (ClientModel clientModel);
+
+    ClientModel update(ClientModel clientModel);
 
     void deleteById(UUID id);
 

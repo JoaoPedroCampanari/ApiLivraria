@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public record ClientRecordDto(@NotBlank String nome,
-                              @NotBlank String CPF,
-                              @NotNull @JsonFormat(pattern = "dd-MM-yyyy") LocalDate data,
-                              @NotBlank String address) {
+public record ClientRecordDto(@NotBlank(message = "Name is required!") String nome,
+                              @NotBlank(message = "CPF is required!") String CPF,
+                              @NotNull(message = "Birth date is required!") @JsonFormat(pattern = "dd-MM-yyyy") LocalDate data,
+                              @NotBlank(message = "Address is required!") String address) {
 }

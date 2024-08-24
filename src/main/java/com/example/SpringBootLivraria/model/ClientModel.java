@@ -26,6 +26,7 @@ public class ClientModel implements Serializable {
     private String address;
     @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy")
+    @Column(name = "birthdate")
     private LocalDate data;
 
     public ClientModel() {

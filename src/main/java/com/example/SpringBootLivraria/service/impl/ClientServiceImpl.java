@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,7 +28,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<ClientModel> findALl(UUID id) {
+    public List<ClientModel> findALl() {
         return clientRepository.findAll();
     }
 
@@ -38,6 +39,11 @@ public class ClientServiceImpl implements ClientService {
             throw new CpfAlreadyExistsException("This CPF already exist!");
         }
 
+        return clientRepository.save(clientModel);
+    }
+
+    @Override
+    public ClientModel update(ClientModel clientModel) {
         return clientRepository.save(clientModel);
     }
 

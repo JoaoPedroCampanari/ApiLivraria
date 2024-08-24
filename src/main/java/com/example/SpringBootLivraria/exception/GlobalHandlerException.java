@@ -25,4 +25,5 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> cpfAlreadyExistsException(CpfAlreadyExistsException cpfAlreadyExistsException){
         return new ResponseEntity<>(cpfAlreadyExistsException.getMessage(),HttpStatus.CONFLICT);
     }
+
 }
