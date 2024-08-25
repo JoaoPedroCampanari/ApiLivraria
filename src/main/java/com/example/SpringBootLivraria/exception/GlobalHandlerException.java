@@ -28,10 +28,12 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(cpfAlreadyExistsException.getMessage(),HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(BookNotFoundException.class)
     public ResponseEntity<String> bookNotFoundException(BookNotFoundException bookNotFoundException){
         return new ResponseEntity<>(bookNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(NameAlreadyExistException.class)
     public ResponseEntity<String> nameAlreadyExistException(NameAlreadyExistException alreadyExistException){
         return new ResponseEntity<>(alreadyExistException.getMessage(), HttpStatus.CONFLICT);
     }

@@ -1,5 +1,6 @@
 package com.example.SpringBootLivraria.controller;
 
+import com.example.SpringBootLivraria.ResponseDelete.ApiResponse;
 import com.example.SpringBootLivraria.dto.ClientRecordDto;
 import com.example.SpringBootLivraria.model.ClientModel;
 import com.example.SpringBootLivraria.service.ClientService;
@@ -32,7 +33,11 @@ public class ClientController {
         ClientModel clientModel = new ClientModel();
         BeanUtils.copyProperties(recordDto,clientModel);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(clientModel));
+        clientService.save(clientModel);
+
+        clientModel.add(linkTo(methodOn(ClientController.class).findByIdClient(clientModel.getId())).withRel("Client:"));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientModel);
     }
 
     @GetMapping("/{id}")
@@ -57,9 +62,11 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteByIdClient(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<ApiResponse> deleteByIdClient(@PathVariable(value = "id") UUID id){
         clientService.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).body("Product deleted successfully");
+
+        ApiResponse response = new ApiResponse("Product deleted successfully", linkTo(methodOn(ClientController.class).findAllClients()).withRel("Clients List"));
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping("/{id}")
@@ -67,7 +74,11 @@ public class ClientController {
         ClientModel clientModel = clientService.findById(id);
         BeanUtils.copyProperties(clientRecordDto,clientModel);
 
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.update(clientModel));
+        clientService.update(clientModel);
+
+        clientModel.add(linkTo(methodOn(ClientController.class).findByIdClient(id)).withRel("Client: "));
+
+        return ResponseEntity.status(HttpStatus.OK).body(clientModel);
     }
 
 }

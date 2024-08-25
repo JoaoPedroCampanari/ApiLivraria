@@ -44,6 +44,9 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientModel update(ClientModel clientModel) {
+        if (!clientRepository.existsById(clientModel.getId())){
+            throw new ClientNotFoundException("This client ID doesn't exist! " + clientModel.getId());
+        }
         return clientRepository.save(clientModel);
     }
 

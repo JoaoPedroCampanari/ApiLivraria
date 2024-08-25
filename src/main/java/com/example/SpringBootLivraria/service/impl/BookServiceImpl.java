@@ -43,6 +43,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookModel update(BookModel clientModel) {
+        if (!bookRepository.existsById(clientModel.getId())){
+            throw new BookNotFoundException("This Book id doesn't exist! " + clientModel.getId());
+        }
+
         return bookRepository.save(clientModel);
     }
 
@@ -51,5 +55,7 @@ public class BookServiceImpl implements BookService {
         if (!bookRepository.existsById(id)){
             throw new BookNotFoundException("This Book ID: " + id  + " doesn't exist!");
         }
+
+        bookRepository.deleteById(id);
     }
 }
