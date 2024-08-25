@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -34,12 +37,23 @@ public class ClientController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ClientModel> findByIdClient(@PathVariable(value = "id") UUID id){
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.findById(id));
+
+        ClientModel clientModel = clientService.findById(id);
+        clientModel.add(linkTo(methodOn(ClientController.class).findAllClients()).withRel("Clients List"));
+
+        return ResponseEntity.status(HttpStatus.OK).body(clientModel);
     }
 
     @GetMapping
     public ResponseEntity<List<ClientModel>> findAllClients(){
-        return ResponseEntity.status(HttpStatus.OK).body(clientService.findALl());
+        List<ClientModel> clientModelList = clientService.findALl();
+        if (!clientModelList.isEmpty()){
+            for (ClientModel client: clientModelList){
+                UUID id = client.getId();
+                client.add(linkTo(methodOn(ClientController.class).findByIdClient(id)).withRel("Client"));
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(clientModelList);
     }
 
     @DeleteMapping("/{id}")
