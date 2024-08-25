@@ -1,7 +1,9 @@
 package com.example.SpringBootLivraria.exception;
 
+import com.example.SpringBootLivraria.exception.exceptions.BookNotFoundException;
 import com.example.SpringBootLivraria.exception.exceptions.ClientNotFoundException;
 import com.example.SpringBootLivraria.exception.exceptions.CpfAlreadyExistsException;
+import com.example.SpringBootLivraria.exception.exceptions.NameAlreadyExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,14 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CpfAlreadyExistsException.class)
     public ResponseEntity<String> cpfAlreadyExistsException(CpfAlreadyExistsException cpfAlreadyExistsException){
         return new ResponseEntity<>(cpfAlreadyExistsException.getMessage(),HttpStatus.CONFLICT);
+    }
+
+    public ResponseEntity<String> bookNotFoundException(BookNotFoundException bookNotFoundException){
+        return new ResponseEntity<>(bookNotFoundException.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
+    public ResponseEntity<String> nameAlreadyExistException(NameAlreadyExistException alreadyExistException){
+        return new ResponseEntity<>(alreadyExistException.getMessage(), HttpStatus.CONFLICT);
     }
 
 }

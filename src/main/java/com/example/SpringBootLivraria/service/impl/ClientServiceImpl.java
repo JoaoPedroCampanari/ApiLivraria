@@ -50,7 +50,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void deleteById(UUID id) {
         if (!clientRepository.existsById(id)){
-            throw new ClientNotFoundException("This ID: " + id  + " doesn't exist!");
+            throw new ClientNotFoundException("This Client ID: " + id  + " doesn't exist!");
         }
 
         clientRepository.deleteById(id);

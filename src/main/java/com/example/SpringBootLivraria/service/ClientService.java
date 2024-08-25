@@ -3,7 +3,6 @@ package com.example.SpringBootLivraria.service;
 import com.example.SpringBootLivraria.model.ClientModel;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface ClientService {

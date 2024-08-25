@@ -6,34 +6,28 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
-
 @Entity
-@Table(name = "TB_CLIENTS")
-public class ClientModel extends RepresentationModel<ClientModel> implements Serializable {
+@Table(name = "TB_Books")
+public class BookModel extends RepresentationModel<BookModel> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @NotBlank
-    private String nome;
     @Column(unique = true)
+    private String nome;
     @NotBlank
-    private String CPF;
-    @NotBlank
-    private String address;
+    private String descricao;
     @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy")
-    @Column(name = "birthdate")
-    private LocalDate data;
+    private LocalDate dataLancamento;
 
-    public ClientModel() {
+    public BookModel (){
     }
-
 
     public UUID getId() {
         return id;
@@ -43,35 +37,27 @@ public class ClientModel extends RepresentationModel<ClientModel> implements Ser
         this.id = id;
     }
 
-    public String getNome() {
+    public @NotBlank String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(@NotBlank String nome) {
         this.nome = nome;
     }
 
-    public String getCPF() {
-        return CPF;
+    public @NotNull LocalDate getDataLancamento() {
+        return dataLancamento;
     }
 
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
+    public void setDataLancamento(@NotNull LocalDate dataLancamento) {
+        this.dataLancamento = dataLancamento;
     }
 
-    public LocalDate getData() {
-        return data;
+    public @NotBlank String getDescricao() {
+        return descricao;
     }
 
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    public void setDescricao(@NotBlank String descricao) {
+        this.descricao = descricao;
     }
 }
