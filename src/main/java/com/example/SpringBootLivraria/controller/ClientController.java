@@ -1,6 +1,6 @@
 package com.example.SpringBootLivraria.controller;
 
-import com.example.SpringBootLivraria.ResponseDelete.ApiResponse;
+import com.example.SpringBootLivraria.responseDelete.ApiResponse;
 import com.example.SpringBootLivraria.dto.ClientRecordDto;
 import com.example.SpringBootLivraria.model.ClientModel;
 import com.example.SpringBootLivraria.service.ClientService;
@@ -75,7 +75,6 @@ public class ClientController {
         BeanUtils.copyProperties(clientRecordDto,clientModel);
 
         clientService.update(clientModel);
-
         clientModel.add(linkTo(methodOn(ClientController.class).findByIdClient(id)).withRel("Client: "));
 
         return ResponseEntity.status(HttpStatus.OK).body(clientModel);

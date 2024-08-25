@@ -1,5 +1,7 @@
 package com.example.SpringBootLivraria.controller;
 
+import com.example.SpringBootLivraria.model.ClientModel;
+import com.example.SpringBootLivraria.responseDelete.ApiResponse;
 import com.example.SpringBootLivraria.dto.BookRecordDto;
 import com.example.SpringBootLivraria.model.BookModel;
 import com.example.SpringBootLivraria.service.BookService;
@@ -59,5 +61,24 @@ public class BookController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(bookModelList);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse> deleteBook(@PathVariable(value = "id") UUID id){
+        bookService.deleteById(id);
+        ApiResponse response = new ApiResponse("Book successfully deleted!", linkTo(methodOn(BookController.class).findAllBooks()).withRel("Books List:"));
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BookModel> updateBook(@PathVariable(value = "id") UUID id, @RequestBody @Valid BookRecordDto bookRecordDto){
+        BookModel bookModel = bookService.findById(id);
+        BeanUtils.copyProperties(bookRecordDto,bookModel);
+
+        bookService.update(bookModel);
+        bookModel.add(linkTo(methodOn(BookController.class).findByIdBook(id)).withRel("Book: "));
+
+        return ResponseEntity.status(HttpStatus.OK).body(bookModel);
     }
 }
