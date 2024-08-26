@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/books")
+@RequestMapping({"/books","/books/"})
 public class BookController {
 
     private final BookService bookService;

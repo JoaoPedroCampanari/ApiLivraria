@@ -29,6 +29,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookModel> findALl() {
+
+        if (bookRepository.findAll().isEmpty()){
+            throw new BookNotFoundException("No Books found. Please ensure that there are books registered in the system.");
+        }
+
         return bookRepository.findAll();
     }
 

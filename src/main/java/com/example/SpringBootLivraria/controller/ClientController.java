@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping({"/clients","/clients/"})
 public class ClientController {
 
     private final ClientService clientService;

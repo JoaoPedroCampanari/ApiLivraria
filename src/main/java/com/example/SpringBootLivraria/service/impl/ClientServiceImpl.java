@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,7 +28,13 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<ClientModel> findALl() {
-        return clientRepository.findAll();
+
+        List<ClientModel> clientModelList = clientRepository.findAll();
+
+        if (clientModelList.isEmpty()){
+            throw new ClientNotFoundException("No clients found. Please ensure that there are clients registered in the system.");
+        }
+        return clientModelList;
     }
 
     @Override
