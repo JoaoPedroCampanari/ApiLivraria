@@ -1,9 +1,11 @@
 package com.example.SpringBootLivraria.controller;
 
+import com.example.SpringBootLivraria.model.AtorModel;
 import com.example.SpringBootLivraria.model.ClientModel;
 import com.example.SpringBootLivraria.responseDelete.ApiResponse;
 import com.example.SpringBootLivraria.dto.BookRecordDto;
 import com.example.SpringBootLivraria.model.BookModel;
+import com.example.SpringBootLivraria.service.AtorService;
 import com.example.SpringBootLivraria.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -23,16 +25,20 @@ import java.util.UUID;
 public class BookController {
 
     private final BookService bookService;
+    private final AtorService atorService;
 
     @Autowired
-    public BookController(BookService bookService){
+    public BookController(BookService bookService, AtorService atorService){
         this.bookService = bookService;
+        this.atorService = atorService;
     }
 
     @PostMapping
     public ResponseEntity<BookModel> saveBook(@RequestBody @Valid BookRecordDto bookRecordDto){
         BookModel bookModel = new BookModel();
         BeanUtils.copyProperties(bookRecordDto, bookModel);
+
+        bookModel.setAtorModel(atorService.findById(bookRecordDto.atorId()).removeLinks());
 
         bookService.save(bookModel);
 
@@ -57,6 +63,7 @@ public class BookController {
         if (!bookModelList.isEmpty()){
             for (BookModel bm: bookModelList){
                 bm.add(linkTo(methodOn(BookController.class).findByIdBook(bm.getId())).withRel("Book:"));
+                bm.getAtorModel().removeLinks();
             }
         }
 
@@ -75,6 +82,8 @@ public class BookController {
     public ResponseEntity<BookModel> updateBook(@PathVariable(value = "id") UUID id, @RequestBody @Valid BookRecordDto bookRecordDto){
         BookModel bookModel = bookService.findById(id);
         BeanUtils.copyProperties(bookRecordDto,bookModel);
+
+        bookModel.setAtorModel(atorService.findById(bookRecordDto.atorId()));
 
         bookService.update(bookModel);
         bookModel.add(linkTo(methodOn(BookController.class).findByIdBook(id)).withRel("Book: "));

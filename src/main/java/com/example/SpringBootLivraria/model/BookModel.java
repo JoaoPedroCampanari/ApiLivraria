@@ -1,6 +1,7 @@
 package com.example.SpringBootLivraria.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -25,6 +26,10 @@ public class BookModel extends RepresentationModel<BookModel> implements Seriali
     @NotNull
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataLancamento;
+
+    @ManyToOne
+    @JoinColumn(name = "ator_id")
+    private AtorModel atorModel;
 
     public BookModel (){
     }
@@ -59,5 +64,13 @@ public class BookModel extends RepresentationModel<BookModel> implements Seriali
 
     public void setDescricao(@NotBlank String descricao) {
         this.descricao = descricao;
+    }
+
+    public AtorModel getAtorModel() {
+        return atorModel;
+    }
+
+    public void setAtorModel(AtorModel atorModel) {
+        this.atorModel = atorModel;
     }
 }

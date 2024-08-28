@@ -1,11 +1,13 @@
 package com.example.SpringBootLivraria.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -23,6 +25,10 @@ public class AtorModel extends RepresentationModel<AtorModel> implements Seriali
     @Column(unique = true)
     @NotBlank
     private String email;
+
+    @OneToMany(mappedBy = "atorModel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<BookModel> bookModels;
 
     public AtorModel(){
 
@@ -66,5 +72,13 @@ public class AtorModel extends RepresentationModel<AtorModel> implements Seriali
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<BookModel> getBookModels() {
+        return bookModels;
+    }
+
+    public void setBookModels(List<BookModel> bookModels) {
+        this.bookModels = bookModels;
     }
 }

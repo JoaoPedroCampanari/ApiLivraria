@@ -5,9 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record BookRecordDto(@NotBlank(message = "Name is required!") String nome,
                             @NotBlank(message = "Description is required!") String descricao,
                             @NotNull (message = "Date is required!")
-                            @JsonFormat(pattern = "dd-MM-yyyy") LocalDate dataLancamento) {
+                            @JsonFormat(pattern = "dd-MM-yyyy") LocalDate dataLancamento ,
+                            @NotNull UUID atorId) {
 }
