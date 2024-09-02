@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +39,23 @@ public class ClientController {
         clientModel.add(linkTo(methodOn(ClientController.class).findByIdClient(clientModel.getId())).withRel("Client:"));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(clientModel);
+    }
+
+    @PostMapping("/list")
+    public ResponseEntity<List<ClientModel>> saveAllClients(@RequestBody @Valid List<ClientRecordDto> listRecordClient){
+        List<ClientModel> clientModelList = new ArrayList<>();
+
+        for (ClientRecordDto c: listRecordClient){
+            ClientModel clientModel = new ClientModel();
+
+            BeanUtils.copyProperties(c,clientModel);
+
+            clientModel.add(linkTo(methodOn(ClientController.class).findAllClients()).withRel("Client list"));
+
+            clientModelList.add(clientModel);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.saveAllClients(clientModelList));
     }
 
     @GetMapping("/{id}")

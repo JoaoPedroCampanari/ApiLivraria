@@ -9,6 +9,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,6 +31,9 @@ public class BookModel extends RepresentationModel<BookModel> implements Seriali
     @ManyToOne
     @JoinColumn(name = "ator_id")
     private AtorModel atorModel;
+
+    @ManyToMany(mappedBy = "books")
+    List<ClientModel> clientes;
 
     public BookModel (){
     }
@@ -72,5 +76,13 @@ public class BookModel extends RepresentationModel<BookModel> implements Seriali
 
     public void setAtorModel(AtorModel atorModel) {
         this.atorModel = atorModel;
+    }
+
+    public List<ClientModel> getClintes() {
+        return clientes;
+    }
+
+    public void setClintes(List<ClientModel> clintes) {
+        this.clientes = clintes;
     }
 }

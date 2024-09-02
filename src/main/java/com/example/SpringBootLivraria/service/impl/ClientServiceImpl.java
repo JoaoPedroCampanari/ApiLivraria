@@ -5,9 +5,11 @@ import com.example.SpringBootLivraria.exception.exceptions.CpfAlreadyExistsExcep
 import com.example.SpringBootLivraria.model.ClientModel;
 import com.example.SpringBootLivraria.repository.ClientRepository;
 import com.example.SpringBootLivraria.service.ClientService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,5 +64,28 @@ public class ClientServiceImpl implements ClientService {
         }
 
         clientRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ClientModel> saveAllClients(List<ClientModel> clientModelList) {
+        List<ClientModel> clientModerate = new ArrayList<>();
+
+        if (clientModelList.isEmpty()){
+            throw new ClientNotFoundException("This list is empty!");
+        }
+
+        for (ClientModel c: clientModelList){
+
+            if (clientRepository.existsByCPF(c.getCPF())){
+                throw new CpfAlreadyExistsException("This CPF already exist! " + c.getCPF());
+            }
+            ClientModel clientModel = new ClientModel();
+
+            BeanUtils.copyProperties(c,clientModel);
+
+            clientModerate.add(clientModel);
+        }
+
+        return clientRepository.saveAll(clientModerate);
     }
 }

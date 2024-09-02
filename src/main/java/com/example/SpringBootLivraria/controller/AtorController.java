@@ -1,7 +1,6 @@
 package com.example.SpringBootLivraria.controller;
 
 import com.example.SpringBootLivraria.dto.AtorRecordDto;
-import com.example.SpringBootLivraria.dto.BookRecordDto;
 import com.example.SpringBootLivraria.model.AtorModel;
 import com.example.SpringBootLivraria.responseDelete.ApiResponse;
 import com.example.SpringBootLivraria.service.AtorService;

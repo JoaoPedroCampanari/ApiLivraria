@@ -17,4 +17,5 @@ public interface ClientService {
 
     void deleteById(UUID id);
 
+    List<ClientModel> saveAllClients(List<ClientModel> clientModelList);
 }

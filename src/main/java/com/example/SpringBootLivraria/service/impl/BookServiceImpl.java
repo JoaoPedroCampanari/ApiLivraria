@@ -1,7 +1,6 @@
 package com.example.SpringBootLivraria.service.impl;
 
 import com.example.SpringBootLivraria.exception.exceptions.BookNotFoundException;
-import com.example.SpringBootLivraria.exception.exceptions.ClientNotFoundException;
 import com.example.SpringBootLivraria.exception.exceptions.NameAlreadyExistException;
 import com.example.SpringBootLivraria.model.BookModel;
 import com.example.SpringBootLivraria.repository.BookRepository;
